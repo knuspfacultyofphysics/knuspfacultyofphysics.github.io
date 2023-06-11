@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel='stylesheet' type='text/css' media='screen' href='styles.css'>
+  <script src="load_files.js"></script>
+  <script src="cookie_util.js"></script>
+  <title>Опитування СПФФ</title>
+</head>
+
+<body>
+  <main class="sheet">
+    <noscript>Зважайте, що ця сторінка досить сильно залежить від JavaScript. Будь ласка, дозвольте його
+      виконання.</noscript>
+    <script>
+      let year = localStorage.getItem("year");
+      let group = localStorage.getItem("group");
+      if (year === null || group === null) {
+        location.replace("page1.html");
+      }
+
+      let discp = localStorage.getItem("discp");
+      let teacher_type = localStorage.getItem("teacher_type");
+      let teacher = localStorage.getItem("teacher");
+      if (discp === null || teacher === null || teacher_type === null) {
+        location.replace("page2.html");
+      }
+    </script>
+
+    <div class="state">
+      <p id="identification1"></p>
+      <script>
+        document.getElementById("identification1").innerHTML = `Обрана група: ${year}, ${group}`;
+      </script>
+      <button class="neutral-button"
+        onclick="localStorage.removeItem('year'); localStorage.removeItem('group'); location.replace('page1.html');">Змінити</button>
+    </div>
+
+
+    <div class="state">
+      <p id="identification2"></p>
+      <script>
+        document.getElementById("identification2").innerHTML = `Навчальний предмет: ${discp} | Тип занять: ${teacher_type} | Викладач: ${teacher}`;
+      </script>
+      <button class="neutral-button"
+        onclick="localStorage.removeItem('discp'); localStorage.removeItem('teacher'); localStorage.removeItem('teacher_type'); location.replace('page2.html');">Змінити</button>
+    </div>
+
+    <h1 class="header">Будь ласка, дайте відповіді на такі питання:</h1>
+    <h2>(Ви можете пропустити одне або декілька питань)</h2>
+    <form id="form3">
+      <div id="questions"></div>
+
+      <div class="flex-row">
+        <button id="apply" class="positive-button">Відправити</button>
+      </div>
+    </form>
+
+
+    <script defer>
+      let form = document.getElementById("form3");
+      let questions = document.getElementById("questions");
+      let apply = document.getElementById("apply");
+
+      (async () => {
+        await wait_to_load();
+        questions.innerHTML = "";
+        for (let q of JSON.parse(localStorage.getItem("questions_data"))) {
+          questions.innerHTML += `<h3 class="subheader">${q.full_title}</h3><br>`;
+          if (q.type == "text") {
+            questions.innerHTML += `<textarea name="${q.short_title}"></textarea>`;
+          } else {
+            for (let i in q.options) {
+              let o = q.options[i];
+              questions.innerHTML += `<input type="radio" name="${q.short_title}" id="${q.short_title}:${i}" value="${o}" /><label for="${q.short_title}:${i}">${o}</label><br>`;
+            }
+          }
+          questions.innerHTML += "<br>";
+        }
+      })();
+
+
+      let weak_hashCode = s => s.split('').reduce((a, b) => { a = ((a << 5) - a) + b.charCodeAt(0); return a & a }, 0); // source: https://stackoverflow.com/a/15710692
+
+      apply.onclick = (e) => {
+        e.preventDefault();
+        if (!confirm("Впевнені, що хочете відправити?")) {
+          return
+        }
+
+        const scriptURL = JSON.parse(localStorage.getItem("config")).scriptURL;
+        apply.innerText = "Відправляємо...";
+        apply.setAttribute("disabled", "");
+
+        // source: https://dev.to/kromate/connecting-your-html-forms-to-a-google-spreadsheet-p9h  (+modified)
+        let date_code = getCookie("datecode");
+        if (date_code === null) {
+          date_code = weak_hashCode(Date.now() + "");
+          setCookie("datecode", date_code, 60);
+        }
+        let agent_code = getCookie("agentcode");
+        if (agent_code === null) {
+          agent_code = weak_hashCode(window.navigator.userAgent);
+          setCookie("agentcode", agent_code, 60);
+        }
+
+        let requestBody = new FormData(form);
+        requestBody.append("datecode", date_code);
+        requestBody.append("agentcode", agent_code);
+        requestBody.append("Курс", year);
+        requestBody.append("Група", group);
+        requestBody.append("Предмет", discp);
+        requestBody.append("Тип Занять", teacher_type);
+        requestBody.append("Викладач", teacher);
+
+        fetch(scriptURL, { method: "POST", body: requestBody })
+          .then((response) => {
+            location.replace("page4.html");
+          })
+          .catch((error) => {
+            alert("Error!", error.message);
+            apply.innerText = "Відправити";
+            apply.removeAttribute("disabled");
+          });
+      }
+    </script>
+  </main>
+</body>
+
+</html>

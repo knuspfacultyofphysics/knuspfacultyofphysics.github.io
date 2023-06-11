@@ -1,0 +1,29 @@
+[
+  {
+    "full_title": "Question 1",
+    "short_title": "question1 alias",
+    "type": "select",
+    "options": [
+      "option1",
+      "option2",
+      "option3"
+    ]
+  },
+  {
+    "full_title": "Question 2",
+    "short_title": "question2 alias",
+    "type": "select",
+    "options": [
+      "option1",
+      "option2",
+      "option3",
+      "option4",
+      "option5"
+    ]
+  },
+  {
+    "full_title": "Text question",
+    "short_title": "text question alias",
+    "type": "text"
+  }
+]

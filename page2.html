@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel='stylesheet' type='text/css' media='screen' href='styles.css'>
+  <script src="load_files.js"></script>
+  <title>Опитування СПФФ</title>
+</head>
+
+<body>
+  <main class="sheet">
+    <noscript>Зважайте, що ця сторінка досить сильно залежить від JavaScript. Будь ласка, дозвольте його
+      виконання.</noscript>
+    <script>
+      let year = localStorage.getItem("year");
+      let group = localStorage.getItem("group");
+      if (year === null || group === null) {
+        location.replace("page1.html");
+      }
+    </script>
+    <div class="state">
+      <p id="identification"></p>
+
+        <button class="neutral-button"
+          onclick="localStorage.removeItem('year'); localStorage.removeItem('group'); location.replace('page1.html');">Змінити</button>
+    </div>
+    <script>
+      let identification = document.getElementById("identification");
+      identification.innerHTML = `Обрана група: ${year}, ${group}`;
+    </script>
+    <h1 class="header">Вибір викладача</h1>
+    <form id="form2">
+      <h3 class="subheader">Оберіть навчальний предмет:</h3>
+      <div id="discp" class="selection-container"></div>
+
+      <h3 id="teach-type-header" class="subheader folded">Оберіть вид пар:</h3>
+      <div id="teach-type" class="folded selection-container"></div>
+
+      <h3 id="teach-header" class="subheader folded">Оберіть викладача:</h3>
+      <div id="teach" class="folded selection-container"></div>
+
+      <div class="flex-row">
+      <button id="apply" class="folded positive-button">Обрати</button>
+      </div>
+    </form>
+    <script defer>
+      let form = document.getElementById("form2");
+      let disciplines = document.getElementById("discp");
+      let teach_type_header = document.getElementById("teach-type-header");
+      let teach_type = document.getElementById("teach-type");
+      let teach_header = document.getElementById("teach-header");
+      let teach = document.getElementById("teach");
+      let apply = document.getElementById("apply");
+
+      (async () => {
+        await wait_to_load();
+        for (let discp in JSON.parse(localStorage.getItem("study_data")).years[year][group]) {
+          disciplines.innerHTML += `<input id="d:${discp}" type="radio" name="discp" value="${discp}" onchange="update_types('${discp}')"><label for="d:${discp}">${discp}</label><br>`;
+        }
+      })();
+
+      function update_types(discp) {
+        let data = JSON.parse(localStorage.getItem("study_data"));
+        let tps = data.years[year][group][discp];
+        teach_type.innerHTML = "";
+        for (let t in tps) {
+          let v = tps[t];
+          if (v.length > 0 || typeof v == "string") {
+            teach_type.innerHTML += `<input id="tp:${t}" type="radio" name="teach_type" value="${t}" onchange="update_teachers('${discp}','${t}')"><label for="tp:${t}">${t}</label><br>`;
+          }
+        }
+        teach_type_header.setAttribute("unfolded", "");
+        teach_type.setAttribute("unfolded", "");
+
+        teach_header.removeAttribute("unfolded");
+        teach.removeAttribute("unfolded");
+        apply.removeAttribute("unfolded");
+      }
+
+      function update_teachers(discp, type) {
+        let data = JSON.parse(localStorage.getItem("study_data"));
+        teach.innerHTML = "";
+        let trs = data.years[year][group][discp][type];
+        if (typeof trs == "string") {
+          trs = [trs];
+        }
+
+        for (let teacher of trs) {
+          let teacher_name = data.teachers[teacher];
+          teach.innerHTML += `<input id="t:${teacher_name}" type="radio" name="teacher" value="${teacher_name}" onchange="show_button();"><label for="t:${teacher_name}">${teacher_name}</label><br>`
+        }
+
+        teach_header.setAttribute("unfolded", "");
+        teach.setAttribute("unfolded", "");
+
+        apply.removeAttribute("unfolded");
+      }
+
+      function show_button() {
+        apply.setAttribute("unfolded", "");
+      }
+
+      function hide_button() {
+        apply.removeAttribute("unfolded");
+      }
+
+      apply.onclick = (e) => {
+        e.preventDefault();
+        console.log("Setting subject to ", form.discp.value, " teacher to:", form.teacher.value);
+        localStorage.setItem("discp", form.discp.value);
+        localStorage.setItem("teacher_type", form.teach_type.value);
+        localStorage.setItem("teacher", form.teacher.value);
+        location.replace("page3.html");
+      }
+    </script>
+  </main>
+
+</body>
+
+</html>

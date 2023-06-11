@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel='stylesheet' type='text/css' media='screen' href='styles.css'>
+  <script src="load_files.js"></script>
+  <title>Опитування СПФФ</title>
+</head>
+
+<body>
+  <main class="sheet">
+    <noscript>Зважайте, що ця сторінка досить сильно залежить від JavaScript. Будь ласка, дозвольте його
+      виконання.</noscript>
+    <h1 class="header">Ваші відповіді записано</h1>
+    <h2>Дякуємо за відгук!</h2>
+    <div class="flex-row">
+      <button id="send_more" class="positive-button"
+        onclick="localStorage.removeItem('discp'); localStorage.removeItem('teacher_type'); localStorage.removeItem('teacher'); location.replace('page2.html')">Надати
+        ще один відгук</button>
+      <button id="exit" class="positive-button" onclick="location.replace('page5.html')">Закінчити опитування</button>
+    </div>
+  </main>
+</body>
+
+</html>

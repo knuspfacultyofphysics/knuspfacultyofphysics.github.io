@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset='utf-8'>
+  <meta name='viewport' content='width=device-width, initial-scale=1'>
+  <link rel='stylesheet' type='text/css' media='screen' href='styles.css'>
+  <script src="load_files.js"></script>
+  <title>Опитування СПФФ</title>
+</head>
+
+<body>
+  <main class="sheet">
+    <noscript>Зважайте, що ця сторінка досить сильно залежить від JavaScript. Будь ласка, дозвольте його
+      виконання.</noscript>
+    <h1 class="header">Вибір групи</h1>
+    <form id="form1">
+      <h3 class="subheader">Оберіть ваш курс:</h3>
+      <div id="year" class="selection-container"></div>
+      <h3 id="group-header" class="folded subheader">Оберіть вашу групу:</h3>
+      <div id="group" class="folded selection-container"></div>
+      <div class="flex-row">
+      <button id="apply" class="folded positive-button">Обрати</button>
+      </div>
+    </form>
+    <script defer>
+      let form = document.getElementById("form1");
+      let years = document.getElementById("year");
+      let group_header = document.getElementById("group-header");
+      let groups = document.getElementById("group");
+      let apply = document.getElementById("apply");
+      (async () => {
+        await wait_to_load();
+        for (let year in JSON.parse(localStorage.getItem("study_data")).years) {
+          years.innerHTML += `<input id="y:${year}" type="radio" name="year" value="${year}" onchange="update_groups('${year}'); hideButton();"><label for="y:${year}">${year}</label><br>`;
+        }
+      })();
+
+      function update_groups(year) {
+        let groups_data = JSON.parse(localStorage.getItem("study_data")).years;
+        groups.innerHTML = "";
+        for (let group in groups_data[year]) {
+          groups.innerHTML += `<input id="g:${group}" type="radio" name="group" value="${group}" onchange="showButton();"><label for="g:${group}">${group}</label><br>`;
+        }
+        group_header.setAttribute("unfolded", "");
+        group.setAttribute("unfolded", "");
+      }
+
+      function showButton() {
+        apply.setAttribute("unfolded", ""); // ЦЕЙ КОД НЕ ВИКОНУЄТЬСЯ НАПРЯМУ У ВЛАСТИВОСТІ onchange, ТОМУ ЩО JS ЦЕ ШМАТ ЛАЙНА.
+      }
+
+      function hideButton() {
+        apply.removeAttribute("unfolded");
+      }
+
+      apply.onclick = (e) => {
+        e.preventDefault();
+        console.log("Setting group to ", form.year.value, form.group.value);
+        localStorage.setItem("year", form.year.value);
+        localStorage.setItem("group", form.group.value);
+        location.replace("page2.html");
+      }
+    </script>
+  </main>
+</body>
+
+</html>

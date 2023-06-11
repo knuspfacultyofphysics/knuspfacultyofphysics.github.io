@@ -1,0 +1,67 @@
+{
+  "years": {
+    "year1": {
+      "Group 1": {
+        "Calculus": {
+          "Lectures": [
+            "t1",
+            "t2"
+          ],
+          "Practical": "t1"
+        },
+        "Theory of anime": {
+          "Lectures": "t3"
+        },
+        "The exo-art": {
+          "Lectures": "t4"
+        }
+      },
+      "Group 2": {
+        "Calculus": {
+          "Lectures": [
+            "t1"
+          ],
+          "Practical": "t2"
+        },
+        "Theory of anime": {
+          "Lectures": "t3"
+        },
+        "The exo-art": {
+          "Lectures": "t4"
+        }
+      }
+    },
+    "year2": {
+      "Dataminers": {
+        "Math.Stat": {
+          "Lectures": "t4",
+          "Practical": "t2"
+        },
+        "A strawberry mastery": {
+          "Lectures": "t3"
+        },
+        "The art of war": {
+          "Lectures": "t4"
+        }
+      },
+      "Angels of Death": {
+        "Theory of a deadman": {
+          "Lectures": "t4",
+          "Practical": "t2"
+        },
+        "A strawberry mastery": {
+          "Lectures": "t3"
+        },
+        "The art of war": {
+          "Lectures": "t4"
+        }
+      }
+    }
+  },
+  "teachers": {
+    "t1": "Mr. Green",
+    "t2": "Mrs. Brown",
+    "t3": "Konata Izumi",
+    "t4": "Prof. Draedon"
+  }
+}

@@ -5,6 +5,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link rel='stylesheet' type='text/css' media='screen' href='styles.css'>
+  <script src="debug_clearstorage.js"></script>
   <script src="load_files.js"></script>
   <script src="cookie_util.js"></script>
   <title>Опитування СПФФ</title>
@@ -48,7 +49,7 @@
         onclick="localStorage.removeItem('discp'); localStorage.removeItem('teacher'); localStorage.removeItem('teacher_type'); location.replace('page2.html');">Змінити</button>
     </div>
 
-    <h1 class="header">Будь ласка, дайте відповіді на такі питання:</h1>
+    <h1 class="header">Оцініть від 1 (дуже погано) до 5 (дуже добре) наступні аспекти роботи викладача:</h1>
     <h2>(Ви можете пропустити одне або декілька питань)</h2>
     <form id="form3">
       <div id="questions"></div>
@@ -70,12 +71,15 @@
         for (let q of JSON.parse(localStorage.getItem("questions_data"))) {
           questions.innerHTML += `<h3 class="subheader">${q.full_title}</h3><br>`;
           if (q.type == "text") {
-            questions.innerHTML += `<textarea name="${q.short_title}"></textarea>`;
+            questions.innerHTML += `<textarea name="${q.short_title}" class="feedback"></textarea>`;
           } else {
+            let tmp = "<div class='vote-container'>";
             for (let i in q.options) {
               let o = q.options[i];
-              questions.innerHTML += `<input type="radio" name="${q.short_title}" id="${q.short_title}:${i}" value="${o}" /><label for="${q.short_title}:${i}">${o}</label><br>`;
+              tmp += `<input type="radio" name="${q.short_title}" id="${q.short_title}:${i}" value="${o}" /><label for="${q.short_title}:${i}">${o}</label><br>`;
             }
+            tmp += "</div>";
+            questions.innerHTML += tmp;
           }
           questions.innerHTML += "<br>";
         }

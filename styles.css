@@ -57,7 +57,7 @@ body {
   border-color: var(--accent-bg);
 }
 
-.neutral-button:hover {
+.neutral-button:enabled:hover {
   background-color: var(--accent-fg-h);
 }
 
@@ -67,7 +67,7 @@ body {
   border-color: var(--accent-fg);
 }
 
-.positive-button:hover {
+.positive-button:enabled:hover {
   background-color: var(--accent-bg-h);
 }
 
@@ -102,6 +102,38 @@ body {
   border-color: var(--accent-bg);
   color: var(--accent-bg);
   background-color: var(--accent-fg);
+}
+
+.vote-container {
+  display: flex;
+  flex-direction: row;
+}
+
+.vote-container > input[type="radio"] {
+  display: none;
+}
+
+.vote-container > input[type="radio"] + label {
+  margin: 5px;
+  padding: 5px;
+  border: 2px solid;
+  border-radius: 3px;
+  text-align: center;
+  border-color: var(--vote-fg);
+  color: var(--vote-fg);
+  background-color: var(--vote-bg);
+  transition: border-color 0.05s, color 0.05s, background-color 0.05s;
+  flex-grow: 5;
+}
+
+.vote-container > input[type="radio"] + label:hover {
+  background-color: var(--vote-bg-h);
+}
+
+.vote-container > input[type="radio"]:checked + label {
+  border-color: var(--vote-fg);
+  color: var(--vote-bg);
+  background-color: var(--accent-bg);
 }
 
 .state {
@@ -141,7 +173,7 @@ img {
   margin-right: auto;
 }
 
-textarea#feedback {
+textarea.feedback {
   display: block;
   margin: auto;
   min-width: 98%;
@@ -164,6 +196,10 @@ textarea#feedback {
   --accent-fg-h: rgb(215, 243, 215);
   --grad-1: rgb(43, 163, 27);
   --grad-2: rgb(34, 129, 22);
+  --vote-fg: rgb(0, 0, 0);
+  --vote-bg: rgb(215, 215, 215);
+  --vote-fg-h: rgb(33, 33, 33);
+  --vote-bg-h: rgb(225, 225, 225);
 }
 
 body {

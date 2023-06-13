@@ -1,29 +1,67 @@
 [
   {
-    "full_title": "Question 1",
-    "short_title": "question1 alias",
+    "full_title": "Матеріали, що підготував викладач",
+    "short_title": "materials",
     "type": "select",
     "options": [
-      "option1",
-      "option2",
-      "option3"
+      "1",
+      "2",
+      "3",
+      "4",
+      "5"
     ]
   },
   {
-    "full_title": "Question 2",
-    "short_title": "question2 alias",
+    "full_title": "Проведення занять",
+    "short_title": "classes",
     "type": "select",
     "options": [
-      "option1",
-      "option2",
-      "option3",
-      "option4",
-      "option5"
+      "1",
+      "2",
+      "3",
+      "4",
+      "5"
     ]
   },
   {
-    "full_title": "Text question",
-    "short_title": "text question alias",
+    "full_title": "Володіння матеріалом",
+    "short_title": "teach",
+    "type": "select",
+    "options": [
+      "1",
+      "2",
+      "3",
+      "4",
+      "5"
+    ]
+  },
+  {
+    "full_title": "Систему оцінювання",
+    "short_title": "grade",
+    "type": "select",
+    "options": [
+      "1",
+      "2",
+      "3",
+      "4",
+      "5"
+    ]
+  },
+   {
+    "full_title": "Зв'язок зі студентами",
+    "short_title": "withstudents",
+    "type": "select",
+    "options": [
+      "1",
+      "2",
+      "3",
+      "4",
+      "5"
+    ]
+  },
+  {
+    "full_title": "Можливо, хочете щось додати?",
+    "short_title": "textans",
     "type": "text"
   }
 ]

@@ -5,6 +5,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link rel='stylesheet' type='text/css' media='screen' href='styles.css'>
+  <script src="debug_clearstorage.js"></script>
   <script src="load_files.js"></script>
   <script src="cookie_util.js"></script>
   <title>Опитування СПФФ</title>
@@ -20,7 +21,7 @@
       src="https://cmkt-image-prd.freetls.fastly.net/0.1.0/ps/1332622/910/1367/m2/fpnw/wm1/djayuxpp649krqjihjehrtwwdp6kgq72ukrrws4v2qdsgjovob3jiluiwrdb0b07-.jpg?1464897595&s=51703a9d51d07dd460c9b75544b9c6d8"
       alt="пухнасте кошенятко" width="100px" />
     <h3 class="subheader">Також будемо вдячні за ваш відгук щодо зручності цієї форми:</h3>
-    <textarea id="feedback" placeholder="пишіть відгук сюди..."></textarea>
+    <textarea id="feedback" placeholder="пишіть відгук сюди..." class="feedback"></textarea>
     <div class="flex-row">
       <button id="send" class="neutral-button">Надіслати</button>
       <button onclick="localStorage.clear(); location.replace('page1.html')" class="neutral-button">На початок</button>

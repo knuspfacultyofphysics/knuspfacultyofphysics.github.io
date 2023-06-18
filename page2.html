@@ -57,7 +57,7 @@
 
       (async () => {
         await wait_to_load();
-        for (let discp in JSON.parse(localStorage.getItem("study_data")).years[year][group]) {
+         for (let discp in JSON.parse(localStorage.getItem("study_data")).years[year][group]) {
           disciplines.innerHTML += `<input id="d:${discp}" type="radio" name="discp" value="${discp}" onchange="update_types('${discp}')"><label for="d:${discp}">${discp}</label><br>`;
         }
       })();
